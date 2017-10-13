@@ -20,6 +20,7 @@ public class ShoppingListActivity extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private ListView list;
     private EditText editText;
+    private int anularesto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
