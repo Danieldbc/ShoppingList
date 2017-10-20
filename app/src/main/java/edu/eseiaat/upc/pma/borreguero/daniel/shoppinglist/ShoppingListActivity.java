@@ -16,11 +16,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class ShoppingListActivity extends AppCompatActivity {
-    private ArrayList<String> itemlist;
-    private ArrayAdapter<String> adapter;
+    private ArrayList<ShoppingItem> itemlist;
+    private ShoppingListAdaptaer adapter;
     private ListView list;
     private EditText editText;
-    private int anularesto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +29,17 @@ public class ShoppingListActivity extends AppCompatActivity {
         editText = (EditText)findViewById(R.id.EditText);
 
         itemlist=new ArrayList<>();
-        adapter=new ArrayAdapter<>(ShoppingListActivity.this,android.R.layout.simple_list_item_1,itemlist);
+        adapter=new ShoppingListAdaptaer(this,R.layout.shopping_item,itemlist);
 
         list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
+                itemlist.get(pos).changecheck();
+                adapter.notifyDataSetChanged();
 
+            }
+        });
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
@@ -54,7 +60,7 @@ public class ShoppingListActivity extends AppCompatActivity {
         AlertDialog.Builder builder=new AlertDialog.Builder(this);
         builder.setTitle(R.string.confirm);
         String sure=getResources().getString(R.string.sure);
-        String item=itemlist.get(pos);
+        ShoppingItem item=itemlist.get(pos);
         builder.setMessage(sure+" "+item);
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
@@ -75,10 +81,10 @@ public class ShoppingListActivity extends AppCompatActivity {
     private void AddItem() {
         String item=editText.getText().toString();
         if (!item.isEmpty()){
-            itemlist.add(item);
+            itemlist.add(new ShoppingItem(item));
             adapter.notifyDataSetChanged();
             editText.setText("");
         }
-
+        list.smoothScrollToPosition(itemlist.size()-1);
     }
 }
