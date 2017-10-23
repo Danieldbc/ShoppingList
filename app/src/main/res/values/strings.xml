@@ -3,4 +3,8 @@
     <string name="confirm">confirm</string>
     <string name="sure">Are you sure you want to delete</string>
     <string name="ok">yes</string>
+    <string name="NoFile">The file isn\'t found</string>
+    <string name="NoWrite">Can\'t write in the file</string>
+    <string name="NoRead">Can\'t read list</string>
+    <string name="ClearCheched">Clear checked items</string>
 </resources>
