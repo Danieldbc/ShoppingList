@@ -38,7 +38,7 @@ public class ShoppingListActivity extends AppCompatActivity {
             FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
             for (int i = 0; i < itemlist.size(); i++) {
                 ShoppingItem it = itemlist.get(i);
-                String file = String.format("%s;%b", it.getTexto(), it.isCheck());
+                String file = String.format("%s;%b\n", it.getTexto(), it.isCheck());
                 fos.write(file.getBytes());
             }
             fos.close();
@@ -54,12 +54,15 @@ public class ShoppingListActivity extends AppCompatActivity {
             FileInputStream fis=openFileInput(FILENAME);
             byte[] bufer=new byte[MaxBites];
             int nread=fis.read(bufer);
-            String content=new String(bufer,0,nread);
-            String[] lines=content.split("\n");
-            for (String line : lines) {
-                String[] parts = line.split(";");
-                itemlist.add(new ShoppingItem(parts[0], parts[1].equals("true")));
+            if (nread>0){
+                String content=new String(bufer,0,nread);
+                String[] lines=content.split("\n");
+                for (String line : lines) {
+                    String[] parts = line.split(";");
+                    itemlist.add(new ShoppingItem(parts[0], parts[1].equals("true")));
+                }
             }
+
             fis.close();
         } catch (FileNotFoundException e) {
         } catch (IOException e) {
@@ -80,9 +83,9 @@ public class ShoppingListActivity extends AppCompatActivity {
         list = (ListView)findViewById(R.id.List);
         editText = (EditText)findViewById(R.id.EditText);
 
-        itemlist=new ArrayList<>();
+        ReadItemList();
+
         adapter=new ShoppingListAdaptaer(this,R.layout.shopping_item,itemlist);
-        //ReadItemList();
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -154,16 +157,37 @@ public class ShoppingListActivity extends AppCompatActivity {
             case R.id.clearCheck:
                 clearcheched();
                 return true;
+            case R.id.ClearAll:
+                clearall();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
 
     }
 
+    private void clearall() {
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setTitle(R.string.confirm);
+        String sure=getResources().getString(R.string.sure);
+        String item="all";
+        builder.setMessage(sure+" "+item);
+        builder.setPositiveButton(R.string.clearAll, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                itemlist.clear();
+                adapter.notifyDataSetChanged();
+            }
+        });
+        builder.setNegativeButton(android.R.string.cancel,null);
+        builder.create().show();
+    }
+
+
     private void clearcheched() {
         for (int i=0;i<itemlist.size();i++){
             ShoppingItem item=itemlist.get(i);
-            if (itemlist.get(i).isCheck()){
+            if (item.isCheck()){
                 itemlist.remove(i);
                 i--;
             }

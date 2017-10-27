@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ShoppingList</string>
+    <string name="ClearCheched">Clear checked items</string>
+    <string name="NoFile">The file isn\'t found</string>
+    <string name="NoRead">Can\'t read list</string>
+    <string name="NoWrite">Can\'t write in the file</string>
+    <string name="clearAll">Clear all items</string>
+    <string name="confirm">confirm</string>
+    <string name="ok">yes</string>
+    <string name="sure">Are you sure you want to delete</string>
+</resources>

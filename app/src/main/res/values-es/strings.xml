@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ShoppingList</string>
+    <string name="ClearCheched">Borrar los items seleccionados</string>
+    <string name="NoFile">El archivo no se ha encontrado</string>
+    <string name="NoRead">No se ha podido leer la lista</string>
+    <string name="NoWrite">No se ha podido escribir en el archivo</string>
+    <string name="clearAll">Borrar todos los items</string>
+    <string name="confirm">Confirmar</string>
+    <string name="ok">si</string>
+    <string name="sure">Está seguro de que quiere borrar</string>
+</resources>

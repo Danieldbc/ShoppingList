@@ -7,4 +7,5 @@
     <string name="NoWrite">Can\'t write in the file</string>
     <string name="NoRead">Can\'t read list</string>
     <string name="ClearCheched">Clear checked items</string>
+    <string name="clearAll">Clear all items</string>
 </resources>
